@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { message } from "../../generateMessage.js";
 
 const router = Router();
 
@@ -22,15 +23,17 @@ router.post("/register", (req, res) => {
   res.redirect("/");
 });
 
-router.post("/sendMessage", (req, res) => {
+router.post("/sendMessage", async (req, res) => {
   let switchAnime = req.body.switchAnime;
-  let switchSerie = req.body.switchSerie;
+  let switchTvShow = req.body.switchTvShow;
   let switchFilme = req.body.switchFilme;
 
-  if (switchAnime || switchSerie || switchFilme) {
-    console.log("Anime: " + switchAnime);
+  if (switchAnime || switchTvShow || switchFilme) {
+    /* console.log("Anime: " + switchAnime);
     console.log("Série: " + switchSerie);
-    console.log("Filme: " + switchFilme);
+    console.log("Filme: " + switchFilme); */
+    let email = await message(switchAnime, switchTvShow, switchFilme);
+    console.log("Você recebeu uma nova mensagem:\n\n" + email);
     req.flash("message", "Mensagem enviada com sucesso!");
     req.flash("status", "success");
   } else {
