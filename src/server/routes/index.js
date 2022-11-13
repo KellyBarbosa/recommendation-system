@@ -29,9 +29,6 @@ router.post("/sendMessage", async (req, res) => {
   let switchFilme = req.body.switchFilme;
 
   if (switchAnime || switchTvShow || switchFilme) {
-    /* console.log("Anime: " + switchAnime);
-    console.log("Série: " + switchSerie);
-    console.log("Filme: " + switchFilme); */
     let email = await message(switchAnime, switchTvShow, switchFilme);
     console.log("Você recebeu uma nova mensagem:\n\n" + email);
     req.flash("message", "Mensagem enviada com sucesso!");
