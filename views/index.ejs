@@ -4,22 +4,20 @@
 
     <div class="container ">
 
-      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <% if(status=="success" ) { %>
-          <%- include ('alerts/conf.ejs') %>
-            <%- include ('alerts/success.ejs') %>
+      <div class="row justify-content-center">
+        <div class="col-auto">
+          <% if(status=="success" ) { %>
+            <%- include ('alerts/conf.ejs') %>
+              <%- include ('alerts/success.ejs') %>
 
-              <% }%>
+                <% }%>
 
-                <% if(status=="error" ) { %>
-                  <%- include ('alerts/conf.ejs') %>
-                    <%- include ('alerts/error.ejs') %>
-                      <% }%>
+                  <% if(status=="error" ) { %>
+                    <%- include ('alerts/conf.ejs') %>
+                      <%- include ('alerts/error.ejs') %>
+                        <% }%>
+        </div>
       </div>
-
-
-
-
 
       <div id="carousel" class="carousel carousel-dark slide" data-bs-ride="true">
         <div class="carousel-inner">
@@ -40,8 +38,20 @@
         </button>
       </div>
 
+
     </div>
 
   </body>
 
   <%- include ('partials/footer.ejs') %>
+
+    <script>
+      let button = document.getElementById("btnClose")
+      let status = '<%-status%>'
+      if (status == "success" || status == "error") {
+        setTimeout(closeMessage, 2000);
+      }
+      function closeMessage() {
+        button.click()
+      }
+    </script>
