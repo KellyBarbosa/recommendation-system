@@ -11,15 +11,21 @@ router.get("/", (req, res) => {
 router.post("/register", (req, res) => {
   let email = req.body.email;
   console.log("E-mail: " + email);
-  /*  if (email === undefined) {
-    return res.redirect("/");
-  } */
   if (email.length > 0 && email !== undefined) {
-    console.log("Sucesso");
-    req.flash("message", "Operação realizada com sucesso!");
+    req.flash("message", "E-mail cadastrado com sucesso!");
     req.flash("status", "success");
     res.redirect("/");
+  } else {
+    req.flash("message", "Erro ao cadastrar e-mail.");
+    req.flash("status", "error");
+    res.redirect("/");
   }
+});
+
+router.post("/sendMessage", (req, res) => {
+  req.flash("message", "Mensagem enviada com sucesso!");
+  req.flash("status", "success");
+  res.redirect("/");
 });
 
 export { router };
