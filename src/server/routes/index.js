@@ -15,17 +15,29 @@ router.post("/register", (req, res) => {
     console.log("E-mail: " + email);
     req.flash("message", "E-mail cadastrado com sucesso!");
     req.flash("status", "success");
-    res.redirect("/");
   } else {
     req.flash("message", "Erro ao cadastrar e-mail.");
     req.flash("status", "error");
-    res.redirect("/");
   }
+  res.redirect("/");
 });
 
 router.post("/sendMessage", (req, res) => {
-  req.flash("message", "Mensagem enviada com sucesso!");
-  req.flash("status", "success");
+  let switchAnime = req.body.switchAnime;
+  let switchSerie = req.body.switchSerie;
+  let switchFilme = req.body.switchFilme;
+
+  if (switchAnime || switchSerie || switchFilme) {
+    console.log("Anime: " + switchAnime);
+    console.log("Série: " + switchSerie);
+    console.log("Filme: " + switchFilme);
+    req.flash("message", "Mensagem enviada com sucesso!");
+    req.flash("status", "success");
+  } else {
+    req.flash("message", "Selecione pelo menos uma categoria.");
+    req.flash("status", "error");
+  }
+
   res.redirect("/");
 });
 

@@ -29,9 +29,6 @@ server.use(
 
 server.use(flash());
 
-//server.use(bodyParser.urlencoded({ extended: false }));
-//server.use(bodyParser.json());
-
 server.use(router);
 
 export { server };
