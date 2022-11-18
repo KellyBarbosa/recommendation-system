@@ -10,6 +10,7 @@
     "start": "nodemon index.js"
   },
   "dependencies": {
+    "aws-sdk": "^2.1258.0",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.3",

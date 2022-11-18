@@ -1,16 +1,15 @@
 import { Router } from "express";
 import generateMessage from "../../generateMessage.js";
-import AWS from 'aws-sdk'
-
+import AWS from "aws-sdk";
 
 const router = Router();
 
 // AWS CONFIGS
 
-const creds = new AWS.SharedIniFileCredentials({ profile: 'default' })
-const sns = new AWS.SNS({ creds, region: process.env.AWS_REGION })
+const creds = new AWS.SharedIniFileCredentials({ profile: "default" });
+const sns = new AWS.SNS({ creds, region: process.env.AWS_REGION });
 
-router.get('/status', (req, res) => res.send({ status: 'ok', sns }))
+router.get("/status", (req, res) => res.send({ status: "ok", sns }));
 
 router.get("/", (req, res) => {
   const message = req.flash("message");
@@ -18,31 +17,27 @@ router.get("/", (req, res) => {
   res.render("index", { message, status });
 });
 
-
-
 router.post("/register", (req, res) => {
   const email = req.body.email;
-  console.log(req.body);
   const params = {
-    Protocol: 'EMAIL',
+    Protocol: "EMAIL",
     TopicArn: process.env.AWS_ARN,
-    Endpoint: email
-  }
+    Endpoint: email,
+  };
 
   if (email !== "" && email !== undefined) {
-    console.log("E-mail: " + email);
-
-    sns.subscribe(params, (err, data) => {
-      if (err) {
-        console.log(err);
-        req.flash("message", "Erro ao cadastrar e-mail.");
-        req.flash("status", "error");
-      }
-      else {
-        req.flash("message", "E-mail cadastrado com sucesso!");
-        req.flash("status", "success");
-      }
-    }).promise().then(() => res.redirect("/"))
+    sns
+      .subscribe(params, (err, data) => {
+        if (err) {
+          req.flash("message", "Erro ao cadastrar e-mail.");
+          req.flash("status", "error");
+        } else {
+          req.flash("message", "E-mail cadastrado com sucesso!");
+          req.flash("status", "success");
+        }
+      })
+      .promise()
+      .then(() => res.redirect("/"));
   } else {
     req.flash("message", "Erro ao cadastrar e-mail.");
     req.flash("status", "error");
@@ -63,15 +58,30 @@ router.post("/sendMessage", async (req, res) => {
       getSwitch.tv,
       getSwitch.filme
     );
-    console.log("Você recebeu uma nova mensagem:\n\n" + email);
-    req.flash("message", "Mensagem enviada com sucesso!");
-    req.flash("status", "success");
+
+    const params = {
+      Subject: "Recommendations of the week",
+      Message: email,
+      TopicArn: process.env.AWS_ARN,
+    };
+
+    sns
+      .publish(params, (err, data) => {
+        if (err) {
+          req.flash("message", "Erro ao enviar mensagem.");
+          req.flash("status", "error");
+        } else {
+          req.flash("message", "Mensagem enviada com sucesso!");
+          req.flash("status", "success");
+        }
+      })
+      .promise()
+      .then(() => res.redirect("/"));
   } else {
     req.flash("message", "Selecione pelo menos uma categoria.");
     req.flash("status", "error");
+    res.redirect("/");
   }
-
-  res.redirect("/");
 });
 
 export { router };
