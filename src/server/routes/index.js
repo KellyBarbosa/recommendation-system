@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { message } from "../../generateMessage.js";
+import generateMessage from "../../generateMessage.js";
 
 const router = Router();
 
@@ -10,9 +10,9 @@ router.get("/", (req, res) => {
 });
 
 router.post("/register", (req, res) => {
-  let email = req.body.email;
+  const email = req.body.email;
 
-  if (email.length > 0 && email !== undefined) {
+  if (email !== "" && email !== undefined) {
     console.log("E-mail: " + email);
     req.flash("message", "E-mail cadastrado com sucesso!");
     req.flash("status", "success");
@@ -24,12 +24,18 @@ router.post("/register", (req, res) => {
 });
 
 router.post("/sendMessage", async (req, res) => {
-  let switchAnime = req.body.switchAnime;
-  let switchTvShow = req.body.switchTvShow;
-  let switchFilme = req.body.switchFilme;
+  const getSwitch = {
+    anime: req.body.switchAnime,
+    tv: req.body.switchTvShow,
+    filme: req.body.switchFilme,
+  };
 
-  if (switchAnime || switchTvShow || switchFilme) {
-    let email = await message(switchAnime, switchTvShow, switchFilme);
+  if (getSwitch.anime || getSwitch.tv || getSwitch.filme) {
+    const email = await generateMessage.message(
+      getSwitch.anime,
+      getSwitch.tv,
+      getSwitch.filme
+    );
     console.log("Você recebeu uma nova mensagem:\n\n" + email);
     req.flash("message", "Mensagem enviada com sucesso!");
     req.flash("status", "success");
