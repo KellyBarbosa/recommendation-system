@@ -1,5 +1,5 @@
 import { Router } from "express";
-import snsController from "../../Controllers/snsController.js";
+import snsController from "../../controllers/snsController.js";
 
 const router = Router();
 

@@ -9,8 +9,8 @@ export default {
     return res.send({ status: "Ok", sns });
   },
   async home(req, res) {
-    const message = req.flash("message");
-    const status = req.flash("status");
+    const message = req.session.message;
+    const status = req.session.status;
     const info = await subscribeList();
     const pending = info.pending;
     const confirmed = info.confirmed;
@@ -26,20 +26,20 @@ export default {
 
     if (email !== "" && email !== undefined) {
       sns
-        .subscribe(params, (err, data) => {
+        .subscribe(params, (err) => {
           if (err) {
-            req.flash("message", "Erro ao cadastrar e-mail.");
-            req.flash("status", "error");
+            req.session.message = "Erro ao cadastrar e-mail.";
+            req.session.status = "error";
           } else {
-            req.flash("message", "E-mail cadastrado com sucesso!");
-            req.flash("status", "success");
+            req.session.message = "E-mail cadastrado com sucesso!";
+            req.session.status = "success";
           }
         })
         .promise()
         .then(() => res.redirect("/"));
     } else {
-      req.flash("message", "Erro ao cadastrar e-mail.");
-      req.flash("status", "error");
+      req.session.message = "Erro ao cadastrar e-mail.";
+      req.session.status = "error";
       res.redirect("/");
     }
   },
@@ -64,20 +64,20 @@ export default {
       };
 
       sns
-        .publish(params, (err, data) => {
+        .publish(params, (err) => {
           if (err) {
-            req.flash("message", "Erro ao enviar mensagem.");
-            req.flash("status", "error");
+            req.session.message = "Erro ao enviar mensagem.";
+            req.session.status = "error";
           } else {
-            req.flash("message", "Mensagem enviada com sucesso!");
-            req.flash("status", "success");
+            req.session.message = "Mensagem enviada com sucesso!";
+            req.session.status = "success";
           }
         })
         .promise()
         .then(() => res.redirect("/"));
     } else {
-      req.flash("message", "Selecione pelo menos uma categoria.");
-      req.flash("status", "error");
+      req.session.message = "Selecione pelo menos uma categoria.";
+      req.session.status = "error";
       res.redirect("/");
     }
   },
@@ -107,8 +107,8 @@ const countPending = (data) => {
 };
 
 const countConfirmed = (data) => {
-  const confirmed = data.filter(
-    (e) => e.SubscriptionArn !== "PendingConfirmation"
+  const confirmed = data.filter((e) =>
+    e.SubscriptionArn.includes(":Recommendations:")
   );
   return confirmed.length;
 };
