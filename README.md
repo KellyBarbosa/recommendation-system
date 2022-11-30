@@ -18,7 +18,7 @@ O sistema conta com três opções de tela, sendo uma de cadastro de usuário, u
 Na tela de cadastro, o usuário pode cadastrar o e-mail em que deseja receber as mensagens.
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/40704890/204693661-c8d8ffe1-71e0-4e4a-9594-eea39c8f4427.png" alt="Tela de cadastro"/>
+  <img src="https://user-images.githubusercontent.com/40704890/204694932-a0be6ced-f67d-400e-947e-d117adadc836.png" alt="Tela de cadastro"/>
 </p>
 
 ### Tela de categorias
