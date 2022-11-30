@@ -17,9 +17,13 @@ O sistema conta com três opções de tela, sendo uma de cadastro de usuário, u
 
 Na tela de cadastro, o usuário pode cadastrar o e-mail em que deseja receber as mensagens.
 
+![tela-de-cadastro](https://user-images.githubusercontent.com/40704890/204693661-c8d8ffe1-71e0-4e4a-9594-eea39c8f4427.png)
+
 ### Tela de categorias
 
 Na tela de seleção de categorias, existem três categorias disponíveis, onde é possível escolher sobre quais categorias serão enviadas notificações ao usuário. O usuário deve escolher pelo menos uma das opções disponíveis.
+
+![tela-de-opções](https://user-images.githubusercontent.com/40704890/204693687-6431d0ad-2a16-48cc-9abd-855bef2c10ed.png)
 
 ### Tela de controle de usuários
 
@@ -27,8 +31,9 @@ Na tela de controle de usuários, é possível verificar a quantidade de usuári
 
 O serviço AWS SNS envia uma mensagem de confirmação para o usuário após a solicitação de cadastro. Dessa forma, o usuário deve confirmar o seu interesse em receber as mensagens antes de começar a receber de fato as mensagens.
 
+![tela-de-controle](https://user-images.githubusercontent.com/40704890/204693734-1642ad2a-f502-4ba0-a0e7-1fb00789701b.png)
+
 ## Arquitetura
 
 O sistema implementado possui a seguinte arquitetura:
-
-
+![arquitetura](https://user-images.githubusercontent.com/40704890/204693755-a8b7fc96-5f7f-474e-a24a-37051932f01d.png)
