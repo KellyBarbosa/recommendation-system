@@ -7,7 +7,7 @@ Este projeto consiste em um sistema de notificações que realiza o envio de not
 
 - Node.js
 - EJS
-- SNS 
+- AWS SNS 
 
 ## Funcionamento
 
