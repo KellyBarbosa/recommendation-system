@@ -11,7 +11,7 @@ export default {
   async home(req, res) {
     const message = req.session.message;
     const status = req.session.status;
-    const info = await subscribeList();
+    const info = await subscribeList(req);
     const pending = info.pending;
     const confirmed = info.confirmed;
     res.render("index", { message, status, pending, confirmed });
@@ -56,13 +56,11 @@ export default {
         getSwitch.tv,
         getSwitch.filme
       );
-
       const params = {
         Subject: "Recommendations of the week",
         Message: email,
         TopicArn: process.env.AWS_ARN,
       };
-
       sns
         .publish(params, (err) => {
           if (err) {
@@ -83,7 +81,9 @@ export default {
   },
 };
 
-const subscribeList = async () => {
+const subscribeList = async (req) => {
+  req.session.message = "";
+  req.session.status = "";
   const params = {
     TopicArn: process.env.AWS_ARN,
   };

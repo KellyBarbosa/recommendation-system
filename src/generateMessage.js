@@ -19,10 +19,12 @@ export default {
   },
 };
 
-const getAnime = async () =>
-  await fetch(process.env.URL_API_ANIME)
-    .then((response) => response.json().anime)
+ const getAnime = async () => {
+  const animeData = await fetch(process.env.URL_API_ANIME)
+    .then((response) => response.json())
     .catch((err) => console.log("Erro: ", err));
+  return animeData.anime;
+}; 
 
 const getTvShow = async () => {
   const endpoint = ["top_rated", "on_the_air", "airing_today", "popular"];
